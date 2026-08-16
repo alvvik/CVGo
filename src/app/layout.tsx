@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ButtonCustom from "@/components/ButtonCustom";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +26,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+
+        <div className="fixed bottom-4 left-1/2 z-50 shadow-lg -translate-x-1/2  ">
+          <ButtonCustom className="flex justify-center items-center">
+            <ExternalLink className="inline-block w-6 h-6 mr-2" />
+            <Link href="/creator">Stwórz własne CV!</Link>
+          </ButtonCustom>
+        </div>
+      </body>
     </html>
   );
 }

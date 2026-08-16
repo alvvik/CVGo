@@ -3,14 +3,10 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 interface ButtonCustomProps extends HeadlessButtonProps {
   children?: ReactNode;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
 }
 
 export default function ButtonCustom({
   children,
-  leftIcon,
-  rightIcon,
 
   className,
   type = "button",
@@ -26,9 +22,7 @@ export default function ButtonCustom({
       )}
       {...props}
     >
-      {leftIcon}
       {children && <span>{children}</span>}
-      {rightIcon}
     </Button>
   );
 }
