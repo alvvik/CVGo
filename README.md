@@ -25,5 +25,3 @@ npm run dev
 ```
 
 2. Otwórz w przeglądarce: `http://localhost:2877` .
-
----
