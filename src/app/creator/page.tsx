@@ -4,34 +4,141 @@ import StartPopout from "@/components/creator/StartPopout/StartPopout";
 import { useCVStore } from "@/store/cvStore";
 import { templatesMap } from "@/components/CVTemplates/templates";
 import { useState } from "react";
-
+import InputCustom from "@/components/InputCustom";
+import ButtonCustom from "@/components/ButtonCustom";
+interface Experience {
+  company: string;
+  position: string;
+  startDate?: string;
+  endDate?: string;
+}
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data, templateId, updatePersonal, setTemplate } = useCVStore();
+  const {
+    data,
+    templateId,
+    updatePersonal,
+    setTemplate,
+    addExperience,
+    removeExperience,
+  } = useCVStore();
+
+  const [newExp, setNewExp] = useState<Experience>({
+    company: "",
+    position: "",
+    startDate: "",
+    endDate: "",
+  });
 
   const SidebarContent = (
-    <div className="p-6  bg-background h-full print:hidden">
+    <div className="p-6  bg-background h-full print:hidden overflow-y-auto">
       <h1 className="text-xl font-bold mb-6 ">Kreator CVGo</h1>
 
+      <div className="mb-8 space-y-3">
+        <h2 className="font-semibold mb-4">Dane osobowe</h2>
+        <InputCustom
+          label="Imię i nazwisko"
+          name="fullName"
+          type="text"
+          placeholder="Jan Kowalski"
+          value={data.personalInfo.fullName}
+          onChange={(e) => updatePersonal("fullName", e.target.value)}
+        />
+        <InputCustom
+          label="Stanowisko"
+          name="title"
+          type="text"
+          placeholder="Frontend Developer"
+          value={data.personalInfo.title}
+          onChange={(e) => updatePersonal("title", e.target.value)}
+        />
+      </div>
+
       <div>
-        <h2 className="font-semibold ">Dane osobowe</h2>
-        <div>
-          <label className="block  mb-1">Imię i nazwisko</label>
-          <input
-            type="text"
-            value={data.personalInfo.fullName}
-            onChange={(e) => updatePersonal("fullName", e.target.value)}
-            className="w-full p-2 border rounded-lg "
-          />
+        <h2 className="font-semibold mb-4">Doświadczenie zawodowe</h2>
+
+        <div className="mb-6 p-4 border rounded-lg ">
+          <h3 className="font-medium mb-3 text-sm">Dodaj nowe doświadczenie</h3>
+          <div className="space-y-3">
+            <InputCustom
+              label="Firma"
+              name="company"
+              type="text"
+              placeholder="Nazwa firmy"
+              value={newExp.company}
+              onChange={(e) =>
+                setNewExp({ ...newExp, company: e.target.value })
+              }
+            />
+            <InputCustom
+              label="Stanowisko"
+              name="position"
+              type="text"
+              placeholder="Twoje stanowisko"
+              value={newExp.position}
+              onChange={(e) =>
+                setNewExp({ ...newExp, position: e.target.value })
+              }
+            />
+            <InputCustom
+              label="Data rozpoczęcia"
+              name="startDate"
+              type="date"
+              value={newExp.startDate}
+              onChange={(e) =>
+                setNewExp({ ...newExp, startDate: e.target.value })
+              }
+            />
+            <InputCustom
+              label="Data zakończenia"
+              name="endDate"
+              type="date"
+              value={newExp.endDate}
+              onChange={(e) =>
+                setNewExp({ ...newExp, endDate: e.target.value })
+              }
+            />
+            <ButtonCustom
+              onClick={() => {
+                if (newExp.company && newExp.position) {
+                  addExperience({
+                    id: Date.now().toString(),
+                    ...newExp,
+                  });
+                  setNewExp({
+                    company: "",
+                    position: "",
+                    startDate: "",
+                    endDate: "",
+                  });
+                }
+              }}
+              className="w-full bg-primary  p-2 rounded-lg text-sm font-medium hover:bg-primary/90"
+            >
+              Dodaj
+            </ButtonCustom>
+          </div>
         </div>
-        <div>
-          <label className="block  mb-1">Stanowisko</label>
-          <input
-            type="text"
-            value={data.personalInfo.title}
-            onChange={(e) => updatePersonal("title", e.target.value)}
-            className="w-full p-2 border rounded-lg "
-          />
+
+        <div className="space-y-2">
+          {data.experiences.map((exp) => (
+            <div key={exp.id} className="p-4 border rounded-lg">
+              <div className="flex md:justify-between md:flex-row md:items-start flex-col justify-center items-center gap-2">
+                <div>
+                  <h4 className="font-medium">{exp.position}</h4>
+                  <p>{exp.company}</p>
+                  {exp.startDate && (
+                    <p>
+                      {exp.startDate} {exp.endDate && `- ${exp.endDate}`}
+                    </p>
+                  )}
+                </div>
+                <ButtonCustom onClick={() => removeExperience(exp.id)}>
+                  Usuń
+                </ButtonCustom>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -56,7 +163,7 @@ export default function EditorPage() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-full shadow-lg z-40"
+          className="lg:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40"
         >
           Edytuj
         </button>

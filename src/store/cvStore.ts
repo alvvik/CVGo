@@ -23,6 +23,8 @@ export interface CVState {
 
   updatePersonal: (field: string, value: string) => void;
   setTemplate: (id: "classic" | "modern") => void;
+  addExperience: (experience: Experience) => void;
+  removeExperience: (id: string) => void;
 }
 
 export const useCVStore = create<CVState>((set) => ({
@@ -57,4 +59,20 @@ export const useCVStore = create<CVState>((set) => ({
     })),
 
   setTemplate: (id) => set({ templateId: id }),
+
+  addExperience: (experience) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        experiences: [...state.data.experiences, experience],
+      },
+    })),
+
+  removeExperience: (id) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        experiences: state.data.experiences.filter((exp) => exp.id !== id),
+      },
+    })),
 }));
