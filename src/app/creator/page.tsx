@@ -6,6 +6,7 @@ import { templatesMap } from "@/components/CVTemplates/templates";
 import { useState } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
+import Link from "next/link";
 interface Experience {
   company: string;
   position: string;
@@ -31,35 +32,54 @@ export default function EditorPage() {
   });
 
   const SidebarContent = (
-    <div className="p-6  bg-background h-full print:hidden overflow-y-auto">
-      <h1 className="text-xl font-bold mb-6 ">Kreator CVGo</h1>
-
-      <div className="mb-8 space-y-3">
-        <h2 className="font-semibold mb-4">Dane osobowe</h2>
-        <InputCustom
-          label="Imię i nazwisko"
-          name="fullName"
-          type="text"
-          placeholder="Jan Kowalski"
-          value={data.personalInfo.fullName}
-          onChange={(e) => updatePersonal("fullName", e.target.value)}
-        />
-        <InputCustom
-          label="Stanowisko"
-          name="title"
-          type="text"
-          placeholder="Frontend Developer"
-          value={data.personalInfo.title}
-          onChange={(e) => updatePersonal("title", e.target.value)}
-        />
+    <div className="h-full overflow-y-auto bg-background p-5 text-text print:hidden md:p-6">
+      <div className="mb-6 flex flex-col items-center justify-center gap-2">
+        <Link href="/" className="text-primary hover:text-primary/80">
+          Wróc do strony głównej
+        </Link>
+        <h1 className="mb-6 text-2xl font-bold text-text text-center">
+          Kreator CVGo
+        </h1>
       </div>
 
-      <div>
-        <h2 className="font-semibold mb-4">Doświadczenie zawodowe</h2>
+      <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4 ">
+        <h2 className="text-sm font-semibold uppercase ">Dane osobowe</h2>
 
-        <div className="mb-6 p-4 border rounded-lg ">
-          <h3 className="font-medium mb-3 text-sm">Dodaj nowe doświadczenie</h3>
-          <div className="space-y-3">
+        <div className="space-y-4">
+          <InputCustom
+            label="Imię i nazwisko"
+            name="fullName"
+            type="text"
+            placeholder="Jan Kowalski"
+            value={data.personalInfo.fullName}
+            onChange={(e) => updatePersonal("fullName", e.target.value)}
+          />
+          <InputCustom
+            label="Stanowisko"
+            name="title"
+            type="text"
+            placeholder="Frontend Developer"
+            value={data.personalInfo.title}
+            onChange={(e) => updatePersonal("title", e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-primary/15 bg-background/90 p-4 ">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-text/70">
+            Doświadczenie
+          </h2>
+          <span className="rounded-full bg-accent/10 px-2.5 py-1 text-fluid-small font-medium text-accent">
+            {data.experiences.length}
+          </span>
+        </div>
+
+        <div className="mb-5 rounded-2xl  bg-primary/5 p-4">
+          <h3 className="mb-3 text-base font-semibold text-text">
+            Dodaj nowe doświadczenie
+          </h3>
+          <div className="space-y-4">
             <InputCustom
               label="Firma"
               name="company"
@@ -80,24 +100,26 @@ export default function EditorPage() {
                 setNewExp({ ...newExp, position: e.target.value })
               }
             />
-            <InputCustom
-              label="Data rozpoczęcia"
-              name="startDate"
-              type="date"
-              value={newExp.startDate}
-              onChange={(e) =>
-                setNewExp({ ...newExp, startDate: e.target.value })
-              }
-            />
-            <InputCustom
-              label="Data zakończenia"
-              name="endDate"
-              type="date"
-              value={newExp.endDate}
-              onChange={(e) =>
-                setNewExp({ ...newExp, endDate: e.target.value })
-              }
-            />
+            <div className="grid gap-4 md:grid-cols-2">
+              <InputCustom
+                label="Data rozpoczęcia"
+                name="startDate"
+                type="date"
+                value={newExp.startDate}
+                onChange={(e) =>
+                  setNewExp({ ...newExp, startDate: e.target.value })
+                }
+              />
+              <InputCustom
+                label="Data zakończenia"
+                name="endDate"
+                type="date"
+                value={newExp.endDate}
+                onChange={(e) =>
+                  setNewExp({ ...newExp, endDate: e.target.value })
+                }
+              />
+            </div>
             <ButtonCustom
               onClick={() => {
                 if (newExp.company && newExp.position) {
@@ -113,27 +135,37 @@ export default function EditorPage() {
                   });
                 }
               }}
-              className="w-full bg-primary  p-2 rounded-lg text-sm font-medium hover:bg-primary/90"
+              className="w-full"
             >
-              Dodaj
+              Dodaj doświadczenie
             </ButtonCustom>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           {data.experiences.map((exp) => (
-            <div key={exp.id} className="p-4 border rounded-lg">
-              <div className="flex md:justify-between md:flex-row md:items-start flex-col justify-center items-center gap-2">
-                <div>
-                  <h4 className="font-medium">{exp.position}</h4>
-                  <p>{exp.company}</p>
+            <div
+              key={exp.id}
+              className="rounded-2xl border border-primary/15 bg-background/80 p-4 "
+            >
+              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <h4 className="text-base font-semibold text-text">
+                    {exp.position}
+                  </h4>
+                  <p className="mt-1 text-sm font-medium text-text/80">
+                    {exp.company}
+                  </p>
                   {exp.startDate && (
-                    <p>
+                    <p className="mt-2 text-fluid-small text-text/60">
                       {exp.startDate} {exp.endDate && `- ${exp.endDate}`}
                     </p>
                   )}
                 </div>
-                <ButtonCustom onClick={() => removeExperience(exp.id)}>
+                <ButtonCustom
+                  onClick={() => removeExperience(exp.id)}
+                  className="bg-transparent shadow text-primary hover:bg-accent/10 hover:text-primary/90 focus:ring-accent/20"
+                >
                   Usuń
                 </ButtonCustom>
               </div>
@@ -146,13 +178,13 @@ export default function EditorPage() {
 
   return (
     <>
-      <div className="flex h-screen bg-slate-100 overflow-hidden">
-        <div className="hidden lg:block w-1/2 border-r border-primary/80">
+      <div className="flex h-screen overflow-hidden bg-background text-text">
+        <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block">
           {SidebarContent}
         </div>
 
-        <div className="flex-1 p-2 md:p-8 flex items-center justify-center  print:w-full print:p-0 print:bg-white bg-background text-black">
-          <div className="w-full h-auto max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] bg-white shadow-xl rounded-xl p-4 sm:p-8 flex flex-col justify-between print:shadow-none print:w-full print:max-w-none">
+        <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:w-full print:p-0 print:bg-white">
+          <div className="flex h-auto w-full max-w-full flex-col justify-between  bg-white text-black p-4  sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:shadow-none print:w-full print:max-w-none">
             {(() => {
               const Selected = templatesMap[templateId];
               if (!Selected) return <div>Brak szablonu</div>;
