@@ -7,7 +7,6 @@ interface ButtonCustomProps extends HeadlessButtonProps {
 
 export default function ButtonCustom({
   children,
-
   className,
   type = "button",
   ...props
@@ -16,8 +15,7 @@ export default function ButtonCustom({
     <Button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 px-4 py-2 rounded transition-all cursor-pointer bg-primary hover:bg-primary/80  font-bold ",
-
+        "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 font-semibold text-white  transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-primary focus:outline-none focus:ring-4 focus:ring-primary/20",
         typeof className === "string" ? className : "",
       )}
       {...props}
