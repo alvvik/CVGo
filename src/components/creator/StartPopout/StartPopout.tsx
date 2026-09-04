@@ -41,13 +41,15 @@ export default function StartPopout() {
                   Przejdz do wyboru szablonu
                 </ButtonCustom>
               </div>
-              <div className="p-4 border border-primary/10 rounded-lg flex justify-center items-center flex-col gap-2">
-                <p className="text-fluid-lead font-semibold">Szybki start</p>
-                <p>Pełna kontrola</p>
-                <p>Twórz CV od zera przeciagajac elementy</p>
-                <ButtonCustom onClick={() => alert("Funkcja w budowie")}>
-                  Przejdz do tworzenia od zera
-                </ButtonCustom>
+              <div className="cursor-not-allowed opacity-60 blur-xs select-none pointer-events-none">
+                <div className="p-4 border border-primary/10 rounded-lg flex justify-center items-center flex-col gap-2">
+                  <p className="text-fluid-lead font-semibold">Szybki start</p>
+                  <p>Pełna kontrola</p>
+                  <p>Twórz CV od zera przeciagajac elementy</p>
+                  <ButtonCustom disabled>
+                    Przejdz do tworzenia od zera
+                  </ButtonCustom>
+                </div>
               </div>
             </div>
           </>
