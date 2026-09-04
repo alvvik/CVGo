@@ -7,12 +7,7 @@ import { useState } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
 import Link from "next/link";
-interface Experience {
-  company: string;
-  position: string;
-  startDate?: string;
-  endDate?: string;
-}
+
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const {
@@ -22,14 +17,17 @@ export default function EditorPage() {
     setTemplate,
     addExperience,
     removeExperience,
+    updateExperience,
+    addSkill,
+    removeSkill,
+    updateSkill,
+    addEducation,
+    removeEducation,
+    updateEducation,
+    addLanguage,
+    removeLanguage,
+    updateLanguage,
   } = useCVStore();
-
-  const [newExp, setNewExp] = useState<Experience>({
-    company: "",
-    position: "",
-    startDate: "",
-    endDate: "",
-  });
 
   const SidebarContent = (
     <div className="h-full overflow-y-auto bg-background p-5 text-text print:hidden md:p-6">
@@ -43,7 +41,7 @@ export default function EditorPage() {
       </div>
 
       <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4 ">
-        <h2 className="text-sm font-semibold uppercase ">Dane osobowe</h2>
+        <h2>Dane osobowe</h2>
 
         <div className="space-y-4">
           <InputCustom
@@ -58,115 +56,334 @@ export default function EditorPage() {
             label="Stanowisko"
             name="title"
             type="text"
-            placeholder="Frontend Developer"
+            placeholder="Specjalista"
             value={data.personalInfo.title}
             onChange={(e) => updatePersonal("title", e.target.value)}
+          />
+          <InputCustom
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="jan@example.com"
+            value={data.personalInfo.email}
+            onChange={(e) => updatePersonal("email", e.target.value)}
+          />
+          <InputCustom
+            label="Telefon"
+            name="phone"
+            type="tel"
+            placeholder="+48 123 456 789"
+            value={data.personalInfo.phone}
+            onChange={(e) => updatePersonal("phone", e.target.value)}
+          />
+          <InputCustom
+            label="Adres"
+            name="address"
+            type="text"
+            placeholder="Warszawa, Polska"
+            value={data.personalInfo.address}
+            onChange={(e) => updatePersonal("address", e.target.value)}
+          />
+          <InputCustom
+            label="LinkedIn"
+            name="linkedin"
+            type="text"
+            placeholder="linkedin.com/in/jankowalski"
+            value={data.personalInfo.linkedin}
+            onChange={(e) => updatePersonal("linkedin", e.target.value)}
           />
         </div>
       </div>
 
+      <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4 ">
+        <h2>Podsumowanie</h2>
+        <InputCustom
+          label="Krótki opis zawodowy"
+          name="summary"
+          type="textarea"
+          placeholder="Pasjonat programowania z doświadczeniem w tworzeniu nowoczesnych aplikacji webowych."
+          value={data.personalInfo.summary}
+          onChange={(e) => updatePersonal("summary", e.target.value)}
+        />
+      </div>
+
       <div className="rounded-2xl border border-primary/15 bg-background/90 p-4 ">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-text/70">
-            Doświadczenie
-          </h2>
-          <span className="rounded-full bg-accent/10 px-2.5 py-1 text-fluid-small font-medium text-accent">
-            {data.experiences.length}
-          </span>
+          <h2>Doświadczenie</h2>
+          <ButtonCustom
+            onClick={() => {
+              addExperience({
+                id: Date.now().toString(),
+                company: "",
+                position: "",
+                startDate: "",
+                endDate: "",
+              });
+            }}
+            className="text-sm"
+          >
+            + Dodaj
+          </ButtonCustom>
         </div>
 
-        <div className="mb-5 rounded-2xl  bg-primary/5 p-4">
-          <h3 className="mb-3 text-base font-semibold text-text">
-            Dodaj nowe doświadczenie
-          </h3>
-          <div className="space-y-4">
-            <InputCustom
-              label="Firma"
-              name="company"
-              type="text"
-              placeholder="Nazwa firmy"
-              value={newExp.company}
-              onChange={(e) =>
-                setNewExp({ ...newExp, company: e.target.value })
-              }
-            />
-            <InputCustom
-              label="Stanowisko"
-              name="position"
-              type="text"
-              placeholder="Twoje stanowisko"
-              value={newExp.position}
-              onChange={(e) =>
-                setNewExp({ ...newExp, position: e.target.value })
-              }
-            />
-            <div className="grid gap-4 md:grid-cols-2">
-              <InputCustom
-                label="Data rozpoczęcia"
-                name="startDate"
-                type="date"
-                value={newExp.startDate}
-                onChange={(e) =>
-                  setNewExp({ ...newExp, startDate: e.target.value })
-                }
-              />
-              <InputCustom
-                label="Data zakończenia"
-                name="endDate"
-                type="date"
-                value={newExp.endDate}
-                onChange={(e) =>
-                  setNewExp({ ...newExp, endDate: e.target.value })
-                }
-              />
-            </div>
-            <ButtonCustom
-              onClick={() => {
-                if (newExp.company && newExp.position) {
-                  addExperience({
-                    id: Date.now().toString(),
-                    ...newExp,
-                  });
-                  setNewExp({
-                    company: "",
-                    position: "",
-                    startDate: "",
-                    endDate: "",
-                  });
-                }
-              }}
-              className="w-full"
-            >
-              Dodaj doświadczenie
-            </ButtonCustom>
-          </div>
-        </div>
-
-        <div className="space-y-3">
+        <div className="space-y-4">
           {data.experiences.map((exp) => (
             <div
               key={exp.id}
               className="rounded-2xl border border-primary/15 bg-background/80 p-4 "
             >
-              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                <div className="min-w-0">
-                  <h4 className="text-base font-semibold text-text">
-                    {exp.position}
-                  </h4>
-                  <p className="mt-1 text-sm font-medium text-text/80">
-                    {exp.company}
-                  </p>
-                  {exp.startDate && (
-                    <p className="mt-2 text-fluid-small text-text/60">
-                      {exp.startDate} {exp.endDate && `- ${exp.endDate}`}
-                    </p>
-                  )}
+              <div className="space-y-4">
+                <InputCustom
+                  label="Firma"
+                  name={`company-${exp.id}`}
+                  type="text"
+                  placeholder="Nazwa firmy"
+                  value={exp.company}
+                  onChange={(e) =>
+                    updateExperience(exp.id, "company", e.target.value)
+                  }
+                />
+                <InputCustom
+                  label="Stanowisko"
+                  name={`position-${exp.id}`}
+                  type="text"
+                  placeholder="Stanowisko"
+                  value={exp.position}
+                  onChange={(e) =>
+                    updateExperience(exp.id, "position", e.target.value)
+                  }
+                />
+                <div className="grid gap-4 md:grid-cols-2">
+                  <InputCustom
+                    label="Data rozpoczęcia"
+                    name={`startDate-${exp.id}`}
+                    type="date"
+                    value={exp.startDate}
+                    onChange={(e) =>
+                      updateExperience(exp.id, "startDate", e.target.value)
+                    }
+                  />
+                  <InputCustom
+                    label="Data zakończenia"
+                    name={`endDate-${exp.id}`}
+                    type="date"
+                    value={exp.endDate}
+                    onChange={(e) =>
+                      updateExperience(exp.id, "endDate", e.target.value)
+                    }
+                  />
                 </div>
                 <ButtonCustom
                   onClick={() => removeExperience(exp.id)}
-                  className="bg-transparent shadow text-primary hover:bg-accent/10 hover:text-primary/90 focus:ring-accent/20"
+                  className="w-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
                 >
-                  Usuń
+                  Usuń doświadczenie
+                </ButtonCustom>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-6 rounded-2xl border border-primary/15 bg-background/90 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h2>Umiejętności</h2>
+          <ButtonCustom
+            onClick={() => {
+              addSkill({
+                id: Date.now().toString(),
+                name: "",
+                level: "intermediate",
+              });
+            }}
+            className="text-sm"
+          >
+            + Dodaj
+          </ButtonCustom>
+        </div>
+
+        <div className="space-y-4">
+          {data.skills.map((skill) => (
+            <div
+              key={skill.id}
+              className="rounded-2xl border border-primary/15 bg-background/80 p-4"
+            >
+              <div className="space-y-4">
+                <InputCustom
+                  label="Nazwa umiejętności"
+                  name={`skill-name-${skill.id}`}
+                  type="text"
+                  placeholder="Umiejętność"
+                  value={skill.name}
+                  onChange={(e) =>
+                    updateSkill(skill.id, "name", e.target.value)
+                  }
+                />
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    Poziom
+                  </label>
+                  <select
+                    value={skill.level}
+                    onChange={(e) =>
+                      updateSkill(skill.id, "level", e.target.value)
+                    }
+                    className="w-full px-4 py-2 rounded-xl border border-primary/15 bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <option value="beginner">Początkujący</option>
+                    <option value="intermediate">Średniozaawansowany</option>
+                    <option value="advanced">Zaawansowany</option>
+                    <option value="expert">Ekspert</option>
+                  </select>
+                </div>
+                <ButtonCustom
+                  onClick={() => removeSkill(skill.id)}
+                  className="w-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
+                >
+                  Usuń umiejętność
+                </ButtonCustom>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-6 rounded-2xl border border-primary/15 bg-background/90 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h2>Edukacja</h2>
+          <ButtonCustom
+            onClick={() => {
+              addEducation({
+                id: Date.now().toString(),
+                school: "",
+                degree: "",
+                startDate: "",
+                endDate: "",
+              });
+            }}
+            className="text-sm"
+          >
+            + Dodaj
+          </ButtonCustom>
+        </div>
+
+        <div className="space-y-4">
+          {data.education.map((edu) => (
+            <div
+              key={edu.id}
+              className="rounded-2xl border border-primary/15 bg-background/80 p-4"
+            >
+              <div className="space-y-4">
+                <InputCustom
+                  label="Szkoła/Uczelnia"
+                  name={`school-${edu.id}`}
+                  type="text"
+                  placeholder="Nazwa szkoły/uczelni"
+                  value={edu.school}
+                  onChange={(e) =>
+                    updateEducation(edu.id, "school", e.target.value)
+                  }
+                />
+                <InputCustom
+                  label="Kierunek/Stopień"
+                  name={`degree-${edu.id}`}
+                  type="text"
+                  placeholder="Kierunek, stopień"
+                  value={edu.degree}
+                  onChange={(e) =>
+                    updateEducation(edu.id, "degree", e.target.value)
+                  }
+                />
+                <div className="grid gap-4 md:grid-cols-2">
+                  <InputCustom
+                    label="Data rozpoczęcia"
+                    name={`eduStartDate-${edu.id}`}
+                    type="date"
+                    value={edu.startDate}
+                    onChange={(e) =>
+                      updateEducation(edu.id, "startDate", e.target.value)
+                    }
+                  />
+                  <InputCustom
+                    label="Data zakończenia"
+                    name={`eduEndDate-${edu.id}`}
+                    type="date"
+                    value={edu.endDate}
+                    onChange={(e) =>
+                      updateEducation(edu.id, "endDate", e.target.value)
+                    }
+                  />
+                </div>
+                <ButtonCustom
+                  onClick={() => removeEducation(edu.id)}
+                  className="w-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
+                >
+                  Usuń wykształcenie
+                </ButtonCustom>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-primary/15 bg-background/90 p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h2>Języki obce</h2>
+          <ButtonCustom
+            onClick={() => {
+              addLanguage({
+                id: Date.now().toString(),
+                language: "",
+                level: "B1",
+              });
+            }}
+            className="text-sm"
+          >
+            + Dodaj
+          </ButtonCustom>
+        </div>
+
+        <div className="space-y-4">
+          {data.languages.map((lang) => (
+            <div
+              key={lang.id}
+              className="rounded-2xl border border-primary/15 bg-background/80 p-4"
+            >
+              <div className="space-y-4">
+                <InputCustom
+                  label="Język"
+                  name={`language-${lang.id}`}
+                  type="text"
+                  placeholder="Angielski"
+                  value={lang.language}
+                  onChange={(e) =>
+                    updateLanguage(lang.id, "language", e.target.value)
+                  }
+                />
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    Poziom
+                  </label>
+                  <select
+                    value={lang.level}
+                    onChange={(e) =>
+                      updateLanguage(lang.id, "level", e.target.value)
+                    }
+                    className="w-full px-4 py-2 rounded-xl border border-primary/15 bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <option value="A1">A1 - Początkujący</option>
+                    <option value="A2">A2 - Elementarny</option>
+                    <option value="B1">B1 - Średniozaawansowany</option>
+                    <option value="B2">B2 - Wyższy średniozaawansowany</option>
+                    <option value="C1">C1 - Zaawansowany</option>
+                    <option value="C2">C2 - Profi</option>
+                  </select>
+                </div>
+                <ButtonCustom
+                  onClick={() => removeLanguage(lang.id)}
+                  className="w-full bg-red-500/10 text-red-500 hover:bg-red-500/20"
+                >
+                  Usuń język
                 </ButtonCustom>
               </div>
             </div>
