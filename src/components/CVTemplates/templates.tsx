@@ -1,5 +1,3 @@
-"use client";
-
 import ClassicCV from "./ClassicCV";
 import ModernCV from "./ModernCV";
 
