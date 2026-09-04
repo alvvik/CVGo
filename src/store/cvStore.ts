@@ -67,7 +67,7 @@ export interface CVState {
 export const useCVStore = create<CVState>((set) => ({
   data: {
     personalInfo: {
-      photo: "https://placehold.net/avatar.svg",
+      photo: "",
       fullName: "Jan Kowalski",
       title: "Specjalista",
       email: "jan@example.com",

@@ -3,7 +3,7 @@
 import StartPopout from "@/components/creator/StartPopout/StartPopout";
 import { useCVStore } from "@/store/cvStore";
 import { templatesMap } from "@/components/CVTemplates/templates";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
 import Link from "next/link";
@@ -28,6 +28,19 @@ export default function EditorPage() {
     removeLanguage,
     updateLanguage,
   } = useCVStore();
+
+  const handlePhotoUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        updatePersonal("photo", reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const SidebarContent = (
     <div className="h-full overflow-y-auto bg-background p-5 text-text print:hidden md:p-6">
@@ -92,6 +105,42 @@ export default function EditorPage() {
             value={data.personalInfo.linkedin}
             onChange={(e) => updatePersonal("linkedin", e.target.value)}
           />
+
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-text">
+              Zdjęcie profilowe
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="block w-full rounded-xl border border-primary/15 bg-white/80 px-3 py-2 text-sm text-text file:mr-3 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:py-2 file:text-white"
+            />
+
+            {data.personalInfo.photo ? (
+              <div className="flex items-center gap-3 rounded-xl border border-primary/15 bg-background p-3">
+                <img
+                  src={data.personalInfo.photo}
+                  alt="Podgląd zdjęcia profilowego"
+                  className="h-16 w-16 rounded-full object-cover border border-primary/15"
+                />
+                <button
+                  type="button"
+                  onClick={() => updatePersonal("photo", "")}
+                  className="text-sm text-red-500 hover:text-red-600"
+                >
+                  Usuń zdjęcie
+                </button>
+              </div>
+            ) : (
+              <p className="text-sm text-text/60">
+                Brak Twojego zdjęcia profilowego. Możesz je dodać, aby Twoje CV
+                wyglądało bardziej profesjonalnie. Zwiększa to również szanse na
+                przyciągnięcie uwagi rekrutera. Pamiętaj, aby zdjęcie było
+                aktualne i przedstawiało Cię w pozytywnym świetle.
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
