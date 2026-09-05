@@ -242,7 +242,7 @@ export default function EditorPage() {
               addSkill({
                 id: Date.now().toString(),
                 name: "",
-                level: "intermediate",
+                level: "Średniozaawansowany",
               });
             }}
             className="text-sm"
@@ -279,10 +279,12 @@ export default function EditorPage() {
                     }
                     className="w-full px-4 py-2 rounded-xl border border-primary/15 bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value="beginner">Początkujący</option>
-                    <option value="intermediate">Średniozaawansowany</option>
-                    <option value="advanced">Zaawansowany</option>
-                    <option value="expert">Ekspert</option>
+                    <option value="Początkujacy">Początkujący</option>
+                    <option value="Średniozaawansowany">
+                      Średniozaawansowany
+                    </option>
+                    <option value="Zaawansowany">Zaawansowany</option>
+                    <option value="Espercki">Espercki</option>
                   </select>
                 </div>
                 <ButtonCustom

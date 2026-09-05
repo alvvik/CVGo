@@ -11,7 +11,7 @@ interface Experience {
 interface Skill {
   id: string;
   name: string;
-  level: "beginner" | "intermediate" | "advanced" | "expert";
+  level: "Początkujacy" | "Średniozaawansowany" | "Zaawansowany" | "Espercki";
 }
 
 interface Education {
