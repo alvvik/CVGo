@@ -53,25 +53,6 @@ export default function ModernCV({ data }: Props) {
           </div>
         </section>
 
-        {/* Skills */}
-        {data.skills && data.skills.length > 0 && (
-          <section className="mb-6">
-            <h2 className="text-base sm:text-lg font-bold text-indigo-200 mb-3">
-              Umiejętności
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.map((skill: any) => (
-                <span
-                  key={skill.id}
-                  className="px-3 py-1 bg-indigo-700 text-white text-xs sm:text-sm rounded-full"
-                >
-                  {skill.name}
-                </span>
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* Languages */}
         {data.languages && data.languages.length > 0 && (
           <section className="mb-6">
@@ -113,7 +94,25 @@ export default function ModernCV({ data }: Props) {
             </p>
           </section>
         )}
-
+        {/* Skills */}
+        {data.skills && data.skills.length > 0 && (
+          <section className="mb-6">
+            <h2 className="text-base sm:text-lg font-bold text-indigo-200 mb-3">
+              Umiejętności
+            </h2>
+            {data.skills.map((skill: any) => (
+              <article
+                key={skill.id}
+                className="text-xs sm:text-sm border-l-4 border-indigo-300 pl-4"
+              >
+                <h3 className=" text-slate-900">
+                  <span className="font-bold">{skill.name}</span> -{" "}
+                  {skill.level}
+                </h3>
+              </article>
+            ))}
+          </section>
+        )}
         {/* Experience */}
         {data.experiences && data.experiences.length > 0 && (
           <section className="mb-6">

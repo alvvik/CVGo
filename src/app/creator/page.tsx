@@ -2,7 +2,7 @@
 
 import StartPopout from "@/components/creator/StartPopout/StartPopout";
 import { useCVStore } from "@/store/cvStore";
-import { templatesMap } from "@/components/CVTemplates/templates";
+import templates, { templatesMap } from "@/components/CVTemplates/templates";
 import { useState, type ChangeEvent } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
@@ -51,6 +51,29 @@ export default function EditorPage() {
         <h1 className="mb-6 text-2xl font-bold text-text text-center">
           Kreator CVGo
         </h1>
+      </div>
+
+      <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4">
+        <h2>Szablon CV</h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {templates.map((template) => (
+            <button
+              key={template.id}
+              type="button"
+              onClick={() => setTemplate(template.id as "classic" | "modern")}
+              className={`rounded-xl border p-3 text-left transition-all ${
+                templateId === template.id
+                  ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                  : "border-primary/15 bg-background hover:border-primary/30"
+              }`}
+            >
+              <div className="font-semibold text-text">{template.name}</div>
+              <div className="mt-1 text-xs text-text/60">
+                {template.description}
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4 ">

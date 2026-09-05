@@ -28,7 +28,7 @@ export default function Hero() {
         <h2 className="text-fluid-h2">Stwórz swoje CV w kilka minut</h2>
         <p>Przykład stworzonego CV:</p>
         <Image
-          src="/cv-example.png"
+          src="/classicCv.png"
           alt="Przykład CV"
           width={400}
           height={150}
