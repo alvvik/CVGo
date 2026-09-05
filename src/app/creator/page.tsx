@@ -471,17 +471,19 @@ export default function EditorPage() {
             mobileOpen ? "translate-y-0" : "translate-y-full"
           }`}
         >
-          <div className="h-3/4 bg-background border-t  border-primary/20 rounded-t-xl shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-4">
+          <div className="h-[85vh] max-h-[85vh] overflow-hidden rounded-t-xl border-t border-primary/20 bg-background shadow-2xl">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-primary/10 bg-background p-4">
               <h3 className="font-semibold">Edycja</h3>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-1 bg-primary/10 rounded"
+                className="rounded bg-primary/10 px-3 py-1"
               >
                 Zamknij
               </button>
             </div>
-            <div className="p-4">{SidebarContent}</div>
+            <div className="h-[calc(85vh-73px)] overflow-y-auto overscroll-contain p-4">
+              {SidebarContent}
+            </div>
           </div>
         </div>
       </div>
