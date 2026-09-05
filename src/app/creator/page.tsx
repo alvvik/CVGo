@@ -7,6 +7,8 @@ import { useState, type ChangeEvent } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
 import Link from "next/link";
+import { exportData } from "@/utils/export";
+import { handleImportJson } from "@/utils/import";
 
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -52,7 +54,23 @@ export default function EditorPage() {
           Kreator CVGo
         </h1>
       </div>
-
+      <div className="mb-6 flex gap-3">
+        <ButtonCustom
+          onClick={() => exportData(data)}
+          className="flex-1 text-sm"
+        >
+          Eksportuj JSON
+        </ButtonCustom>
+        <label className="flex flex-1 cursor-pointer items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-primary focus:outline-none focus:ring-4 focus:ring-primary/20">
+          Importuj JSON
+          <input
+            type="file"
+            accept="application/json"
+            onChange={handleImportJson}
+            className="hidden"
+          />
+        </label>
+      </div>
       <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4">
         <h2>Szablon CV</h2>
         <div className="grid gap-3 sm:grid-cols-2">
