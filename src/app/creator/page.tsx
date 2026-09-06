@@ -3,15 +3,16 @@
 import StartPopout from "@/components/creator/StartPopout/StartPopout";
 import { useCVStore } from "@/store/cvStore";
 import templates, { templatesMap } from "@/components/CVTemplates/templates";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, useRef } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
 import Link from "next/link";
-import { exportData } from "@/utils/export";
+import { exportData, exportToPDF } from "@/utils/export";
 import { handleImportJson } from "@/utils/import";
 
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const cvRef = useRef<HTMLDivElement>(null);
   const {
     data,
     templateId,
@@ -60,6 +61,12 @@ export default function EditorPage() {
           className="flex-1 text-sm"
         >
           Eksportuj JSON
+        </ButtonCustom>
+        <ButtonCustom
+          onClick={() => exportToPDF(cvRef)}
+          className="flex-1 text-sm"
+        >
+          Eksportuj PDF
         </ButtonCustom>
         <label className="flex flex-1 cursor-pointer items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-primary focus:outline-none focus:ring-4 focus:ring-primary/20">
           Importuj JSON
@@ -493,7 +500,10 @@ export default function EditorPage() {
         </div>
 
         <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:w-full print:p-0 print:bg-white">
-          <div className="flex h-auto w-full max-w-full flex-col justify-between  bg-white text-black p-4  sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:shadow-none print:w-full print:max-w-none">
+          <div
+            ref={cvRef}
+            className="flex h-auto w-full max-w-full flex-col justify-between  bg-white text-black p-4  sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:shadow-none print:w-full print:max-w-none"
+          >
             {(() => {
               const Selected = templatesMap[templateId];
               if (!Selected) return <div>Brak szablonu</div>;
@@ -504,7 +514,7 @@ export default function EditorPage() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40"
+          className="lg:hidden print:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40"
         >
           Edytuj
         </button>

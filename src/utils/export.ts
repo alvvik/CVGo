@@ -8,8 +8,18 @@ export const exportData = (data: CVState["data"]) => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "moje-cv.json";
+  link.download = `cv-${data.personalInfo.fullName ? data.personalInfo.fullName : new Date().toISOString()}.json`;
 
   link.click();
   URL.revokeObjectURL(url);
+};
+
+export const exportToPDF = (
+  targetRef: React.RefObject<HTMLDivElement | null>,
+) => {
+  if (!targetRef.current) return;
+
+  const element = targetRef.current;
+
+  window.print();
 };

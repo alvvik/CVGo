@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 interface FAQItem {
@@ -42,26 +42,16 @@ export default function FAQ() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      toggleFAQ(index);
-    }
-  };
-
   return (
-    <section className="py-16 px-8" aria-labelledby="faq-heading">
+    <section className="py-16 px-8">
       <div className="max-w-4xl mx-auto">
-        <h2
-          id="faq-heading"
-          className="text-fluid-h2 text-center mb-4 text-text"
-        >
+        <h2 className="text-fluid-h2 text-center mb-4 text-text">
           Najczęściej zadawane pytania
         </h2>
         <p className="text-center text-text/70 mb-12">
           Odpowiedzi na najczęstsze pytania o CVGo
         </p>
-        <div className="space-y-4" role="region" aria-label="FAQ">
+        <div className="space-y-4">
           {faqData.map((faq, index) => (
             <div
               key={index}
@@ -69,33 +59,20 @@ export default function FAQ() {
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                aria-expanded={openIndex === index}
-                aria-controls={`faq-answer-${index}`}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-primary/5 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-primary/5 transition-colors"
               >
                 <span className="font-semibold text-text">{faq.question}</span>
-                <ChevronDown
-                  className={`w-5 h-5 text-primary shrink-0 ml-4 transition-transform duration-300 ease-in-out ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
-                  aria-hidden="true"
-                />
+                {openIndex === index ? (
+                  <ChevronUp className="w-5 h-5 text-primary shrink-0 ml-4" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-primary shrink-0 ml-4" />
+                )}
               </button>
-              <div
-                id={`faq-answer-${index}`}
-                role="region"
-                aria-labelledby={`faq-question-${index}`}
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  openIndex === index
-                    ? "max-h-96 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
-              >
+              {openIndex === index && (
                 <div className="px-6 pb-4 text-text/80 leading-relaxed">
                   {faq.answer}
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </div>
