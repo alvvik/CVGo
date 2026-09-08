@@ -54,3 +54,43 @@ body {
 
   --text-fluid-small: clamp(0.75rem, 0.2vw + 0.7rem, 0.8125rem);
 }
+
+@media print {
+  html,
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  @page {
+    margin: 10mm;
+    size: A4;
+  }
+
+  .cv-print-sheet {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .cv-print-sheet > * {
+    width: 100% !important;
+    max-width: none !important;
+    break-inside: avoid;
+  }
+}

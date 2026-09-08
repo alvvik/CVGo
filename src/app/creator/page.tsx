@@ -2,14 +2,26 @@
 
 import StartPopout from "@/components/creator/StartPopout/StartPopout";
 import { useCVStore } from "@/store/cvStore";
-import { templatesMap } from "@/components/CVTemplates/templates";
-import { useState, type ChangeEvent } from "react";
+import templates, { templatesMap } from "@/components/CVTemplates/templates";
+import { useState, type ChangeEvent, useRef } from "react";
 import InputCustom from "@/components/InputCustom";
 import ButtonCustom from "@/components/ButtonCustom";
 import Link from "next/link";
+import { exportData, exportToPDF } from "@/utils/export";
+import { handleImportJson } from "@/utils/import";
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const cvRef = useRef<HTMLDivElement>(null);
   const {
     data,
     templateId,
@@ -51,6 +63,120 @@ export default function EditorPage() {
         <h1 className="mb-6 text-2xl font-bold text-text text-center">
           Kreator CVGo
         </h1>
+      </div>
+      <div className="mb-6 flex gap-3">
+        <ButtonCustom
+          onClick={() => exportData(data)}
+          className="flex-1 text-sm"
+        >
+          Eksportuj JSON
+        </ButtonCustom>
+        <ButtonCustom
+          onClick={() => exportToPDF(cvRef)}
+          className="flex-1 text-sm"
+        >
+          Eksportuj PDF
+        </ButtonCustom>
+        <label className="flex flex-1 cursor-pointer items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-primary focus:outline-none focus:ring-4 focus:ring-primary/20">
+          Importuj JSON
+          <input
+            type="file"
+            accept="application/json"
+            onChange={handleImportJson}
+            className="hidden"
+          />
+        </label>
+      </div>
+      <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4">
+        <h2>Szablon CV</h2>
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <Listbox value={templateId} onChange={setTemplate}>
+              <div className="relative">
+                <ListboxButton className="relative w-full cursor-pointer rounded-xl border border-primary/15 bg-background px-4 py-3 text-left text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20 hover:border-primary/30 flex items-center justify-between">
+                  <span className="flex items-center gap-3">
+                    {templates.find((t) => t.id === templateId)
+                      ?.previewImage && (
+                      <img
+                        src={
+                          templates.find((t) => t.id === templateId)
+                            ?.previewImage
+                        }
+                        alt="Podgląd szablonu"
+                        className="h-10 w-10 rounded-lg object-cover"
+                      />
+                    )}
+                    <span className="font-semibold">
+                      {templates.find((t) => t.id === templateId)?.name}
+                    </span>
+                  </span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </ListboxButton>
+                <ListboxOptions className="absolute z-10 mt-2 w-full rounded-xl border border-primary/15 bg-background/90 p-2 shadow-lg focus:outline-none">
+                  {templates.map((template) => (
+                    <ListboxOption
+                      key={template.id}
+                      value={template.id}
+                      className="relative cursor-pointer rounded-lg px-3 py-2 text-sm text-text transition-colors hover:bg-primary/10 focus:bg-primary/10 focus:outline-none"
+                    >
+                      <span className="flex items-center gap-3">
+                        {template.previewImage && (
+                          <img
+                            src={template.previewImage}
+                            alt={template.name}
+                            className="h-10 w-10 rounded-lg object-cover"
+                          />
+                        )}
+                        <div className="flex flex-col">
+                          <span className="font-semibold">{template.name}</span>
+                          <span className="text-xs text-text/60">
+                            {template.description}
+                          </span>
+                        </div>
+                      </span>
+                    </ListboxOption>
+                  ))}
+                </ListboxOptions>
+              </div>
+            </Listbox>
+          </div>
+          <Popover className="relative">
+            <PopoverButton className="rounded-xl border border-primary/15 bg-background px-4 py-3 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20 hover:border-primary/30 transition-colors">
+              Podgląd
+            </PopoverButton>
+            <PopoverPanel className="absolute right-0 z-20 mt-2 w-80 rounded-xl border border-primary/15 bg-background/90 p-4 shadow-lg focus:outline-none">
+              {templates.find((t) => t.id === templateId)?.previewImage && (
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-text">
+                    {templates.find((t) => t.id === templateId)?.name}
+                  </h3>
+                  <img
+                    src={
+                      templates.find((t) => t.id === templateId)?.previewImage
+                    }
+                    alt="Podgląd szablonu"
+                    className="w-full rounded-lg object-cover"
+                  />
+                  <p className="text-xs text-text/60">
+                    {templates.find((t) => t.id === templateId)?.description}
+                  </p>
+                </div>
+              )}
+            </PopoverPanel>
+          </Popover>
+        </div>
       </div>
 
       <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4 ">
@@ -242,7 +368,7 @@ export default function EditorPage() {
               addSkill({
                 id: Date.now().toString(),
                 name: "",
-                level: "intermediate",
+                level: "Średniozaawansowany",
               });
             }}
             className="text-sm"
@@ -279,10 +405,12 @@ export default function EditorPage() {
                     }
                     className="w-full px-4 py-2 rounded-xl border border-primary/15 bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value="beginner">Początkujący</option>
-                    <option value="intermediate">Średniozaawansowany</option>
-                    <option value="advanced">Zaawansowany</option>
-                    <option value="expert">Ekspert</option>
+                    <option value="Początkujacy">Początkujący</option>
+                    <option value="Średniozaawansowany">
+                      Średniozaawansowany
+                    </option>
+                    <option value="Zaawansowany">Zaawansowany</option>
+                    <option value="Espercki">Espercki</option>
                   </select>
                 </div>
                 <ButtonCustom
@@ -444,13 +572,16 @@ export default function EditorPage() {
 
   return (
     <>
-      <div className="flex h-screen overflow-hidden bg-background text-text">
-        <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block">
+      <div className="flex h-screen overflow-hidden bg-background text-text print:block print:h-auto print:overflow-visible print:bg-white">
+        <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block print:hidden">
           {SidebarContent}
         </div>
 
-        <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:w-full print:p-0 print:bg-white">
-          <div className="flex h-auto w-full max-w-full flex-col justify-between  bg-white text-black p-4  sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:shadow-none print:w-full print:max-w-none">
+        <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:flex print:w-full print:max-w-none print:p-0 print:bg-white">
+          <div
+            ref={cvRef}
+            className="cv-print-sheet flex h-auto w-full max-w-full flex-col justify-between bg-white text-black p-4 sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:w-full print:max-w-none print:aspect-auto print:p-0 print:shadow-none"
+          >
             {(() => {
               const Selected = templatesMap[templateId];
               if (!Selected) return <div>Brak szablonu</div>;
@@ -461,27 +592,29 @@ export default function EditorPage() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40"
+          className="lg:hidden print:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40 "
         >
           Edytuj
         </button>
 
         <div
-          className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ${
+          className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 print:hidden ${
             mobileOpen ? "translate-y-0" : "translate-y-full"
           }`}
         >
-          <div className="h-3/4 bg-background border-t  border-primary/20 rounded-t-xl shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-4">
+          <div className="h-[85vh] max-h-[85vh] overflow-hidden rounded-t-xl border-t border-primary/20 bg-background shadow-2xl">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-primary/10 bg-background p-4">
               <h3 className="font-semibold">Edycja</h3>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-1 bg-primary/10 rounded"
+                className="rounded bg-primary/10 px-3 py-1"
               >
                 Zamknij
               </button>
             </div>
-            <div className="p-4">{SidebarContent}</div>
+            <div className="h-[calc(85vh-73px)] overflow-y-auto overscroll-contain p-4">
+              {SidebarContent}
+            </div>
           </div>
         </div>
       </div>

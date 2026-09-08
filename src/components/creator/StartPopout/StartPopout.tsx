@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ButtonCustom from "@/components/ButtonCustom";
 import { useCVStore } from "@/store/cvStore";
+import Image from "next/image";
 import templates from "@/components/CVTemplates/templates";
 export default function StartPopout() {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,10 +72,12 @@ export default function StartPopout() {
                     setIsOpen(false);
                   }}
                 >
-                  <img
-                    src={template.previewImage}
+                  <Image
+                    src={template.previewImage as string}
                     alt={template.name}
                     className="w-full h-48 object-cover"
+                    width={400}
+                    height={150}
                   />
                   <div className="p-4">
                     <h3 className="font-semibold">{template.name}</h3>

@@ -14,14 +14,14 @@ export const templates: TemplateEntry[] = [
     id: "classic",
     name: "Klasyczne",
     description: "Prosty, czytelny układ",
-    previewImage: "https://placehold.net/default.png",
+    previewImage: "/classicCv.png",
     component: ClassicCV,
   },
   {
     id: "modern",
     name: "Nowoczesne",
     description: "Nowoczesny, kolorowy układ",
-    previewImage: "https://placehold.net/default.png",
+    previewImage: "/modernCv.png",
     component: ModernCV,
   },
 ];

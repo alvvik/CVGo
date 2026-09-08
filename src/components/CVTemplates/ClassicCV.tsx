@@ -83,7 +83,8 @@ export default function ClassicCV({ data }: Props) {
                   <h3 className="font-bold text-slate-900">{exp.position}</h3>
                   {(exp.startDate || exp.endDate) && (
                     <span className="text-slate-600 text-xs">
-                      {exp.startDate} {exp.endDate && `- ${exp.endDate}`}
+                      {exp.startDate}{" "}
+                      {exp.endDate ? `- ${exp.endDate}` : "- Obecnie"}
                     </span>
                   )}
                 </div>
@@ -109,7 +110,8 @@ export default function ClassicCV({ data }: Props) {
                   <h3 className="font-bold text-slate-900">{edu.degree}</h3>
                   {(edu.startDate || edu.endDate) && (
                     <span className="text-slate-600 text-xs">
-                      {edu.startDate} {edu.endDate && `- ${edu.endDate}`}
+                      {edu.startDate}{" "}
+                      {edu.endDate ? `- ${edu.endDate}` : "- Obecnie"}
                     </span>
                   )}
                 </div>
