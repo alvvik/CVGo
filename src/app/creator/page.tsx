@@ -494,15 +494,15 @@ export default function EditorPage() {
 
   return (
     <>
-      <div className="flex h-screen overflow-hidden bg-background text-text">
-        <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block">
+      <div className="flex h-screen overflow-hidden bg-background text-text print:block print:h-auto print:overflow-visible print:bg-white">
+        <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block print:hidden">
           {SidebarContent}
         </div>
 
-        <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:w-full print:p-0 print:bg-white">
+        <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:flex print:w-full print:max-w-none print:p-0 print:bg-white">
           <div
             ref={cvRef}
-            className="flex h-auto w-full max-w-full flex-col justify-between  bg-white text-black p-4  sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:shadow-none print:w-full print:max-w-none"
+            className="cv-print-sheet flex h-auto w-full max-w-full flex-col justify-between bg-white text-black p-4 sm:max-w-md sm:p-8 md:max-w-xl lg:max-w-2xl lg:aspect-[1/1.414] print:w-full print:max-w-none print:aspect-auto print:p-0 print:shadow-none"
           >
             {(() => {
               const Selected = templatesMap[templateId];
@@ -514,13 +514,13 @@ export default function EditorPage() {
 
         <button
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden print:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40"
+          className="lg:hidden print:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary  px-4 py-2 rounded-full shadow-lg z-40 "
         >
           Edytuj
         </button>
 
         <div
-          className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ${
+          className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 print:hidden ${
             mobileOpen ? "translate-y-0" : "translate-y-full"
           }`}
         >

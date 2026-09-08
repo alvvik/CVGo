@@ -8,13 +8,14 @@ interface ComparisonItem {
 
 const comparisonData: ComparisonItem[] = [
   { feature: "Darmowe użytkowanie", cvgo: true, competitors: false },
-  { feature: "Bez rejestracji", cvgo: true, competitors: false },
+  { feature: "Brak rejestracji", cvgo: true, competitors: false },
+  { feature: "Możliwość zapisania", cvgo: true, competitors: false },
   { feature: "Profesjonalne szablony", cvgo: true, competitors: true },
   { feature: "Eksport do PDF", cvgo: true, competitors: true },
   { feature: "Eksport do DOCX", cvgo: false, competitors: true },
   { feature: "Prywatność danych", cvgo: true, competitors: false },
   { feature: "Szybkość tworzenia", cvgo: true, competitors: true },
-  { feature: "Wsparcie polskie", cvgo: true, competitors: false },
+  { feature: "Polskie wsparcie", cvgo: true, competitors: false },
 ];
 
 export default function Comparison() {

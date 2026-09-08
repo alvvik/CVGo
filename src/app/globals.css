@@ -56,37 +56,41 @@ body {
 }
 
 @media print {
+  html,
   body {
     background: white !important;
     color: black !important;
-  }
-
-  .print\\:hidden {
-    display: none !important;
-  }
-
-  .print\\:w-full {
-    width: 100% !important;
-  }
-
-  .print\\:p-0 {
+    margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  .print\\:bg-white {
-    background: white !important;
-  }
-
-  .print\\:shadow-none {
-    box-shadow: none !important;
-  }
-
-  .print\\:max-w-none {
-    max-width: none !important;
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   @page {
-    margin: 0;
+    margin: 10mm;
     size: A4;
+  }
+
+  .cv-print-sheet {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .cv-print-sheet > * {
+    width: 100% !important;
+    max-width: none !important;
+    break-inside: avoid;
   }
 }

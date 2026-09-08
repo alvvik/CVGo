@@ -7,7 +7,7 @@ type Props = { data: any };
 export default function ModernCV({ data }: Props) {
   const p = data.personalInfo;
   return (
-    <div className="w-full h-full flex flex-col sm:flex-row text-sm sm:text-base bg-white text-slate-800">
+    <div className="w-full h-full print:min-h-screen flex flex-col sm:flex-row text-sm sm:text-base bg-white text-slate-800">
       <aside className="w-full sm:w-1/3 bg-indigo-900 text-white p-4 sm:p-6 order-2 sm:order-1">
         {/* Photo */}
         {p.photo && (
