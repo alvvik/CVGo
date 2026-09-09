@@ -60,6 +60,8 @@ export default function PersonalInfoForm({
           placeholder="+48 123 456 789"
           value={personalInfo.phone}
           onChange={(e) => updatePersonal("phone", e.target.value)}
+          pattern="^(\+\d{1,3}\s?)?(\d{3}\s?){3}$"
+          title="Wprowadź poprawny numer telefonu, np. +48 123 456 789 lub 123456789"
         />
         <InputCustom
           label="Adres"
