@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Experience {
+export interface Experience {
   id: string;
   company: string;
   position: string;
@@ -8,13 +8,13 @@ interface Experience {
   endDate?: string;
 }
 
-interface Skill {
+export interface Skill {
   id: string;
   name: string;
   level: "Początkujacy" | "Średniozaawansowany" | "Zaawansowany" | "Espercki";
 }
 
-interface Education {
+export interface Education {
   id: string;
   school: string;
   degree: string;
@@ -22,7 +22,7 @@ interface Education {
   endDate?: string;
 }
 
-interface Language {
+export interface Language {
   id: string;
   language: string;
   level: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
