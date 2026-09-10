@@ -22,7 +22,7 @@ export default function EducationSection({
         <ButtonCustom
           onClick={() => {
             addEducation({
-              id: Date.now().toString(),
+              id: crypto.randomUUID().toString(),
               school: "",
               degree: "",
               startDate: "",

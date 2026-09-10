@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, devtools } from "zustand/middleware";
 
 export interface Experience {
   id: string;
@@ -11,7 +12,7 @@ export interface Experience {
 export interface Skill {
   id: string;
   name: string;
-  level: "Początkujacy" | "Średniozaawansowany" | "Zaawansowany" | "Espercki";
+  level: "Początkujacy" | "Średniozaawansowany" | "Zaawansowany" | "Ekspert";
 }
 
 export interface Education {
@@ -27,19 +28,19 @@ export interface Language {
   language: string;
   level: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 }
-
+export interface PersonalInfo {
+  photo: string;
+  fullName: string;
+  title: string;
+  email: string;
+  phone: string;
+  address: string;
+  linkedin: string;
+  summary: string;
+}
 export interface CVState {
   data: {
-    personalInfo: {
-      photo: string;
-      fullName: string;
-      title: string;
-      email: string;
-      phone: string;
-      address: string;
-      linkedin: string;
-      summary: string;
-    };
+    personalInfo: PersonalInfo;
     experiences: Experience[];
     skills: Skill[];
     education: Education[];
@@ -48,164 +49,168 @@ export interface CVState {
 
   templateId: "classic" | "modern";
 
-  updatePersonal: (field: string, value: string) => void;
+  updatePersonal: (field: keyof PersonalInfo, value: string) => void;
+
   setTemplate: (id: "classic" | "modern") => void;
   addExperience: (experience: Experience) => void;
-  removeExperience: (id: string) => void;
-  updateExperience: (id: string, field: string, value: string) => void;
+  removeExperience: (id: keyof Experience) => void;
+  updateExperience: (
+    id: string,
+    field: keyof Experience,
+    value: string,
+  ) => void;
   addSkill: (skill: Skill) => void;
   removeSkill: (id: string) => void;
   updateSkill: (id: string, field: string, value: string) => void;
   addEducation: (education: Education) => void;
   removeEducation: (id: string) => void;
-  updateEducation: (id: string, field: string, value: string) => void;
+  updateEducation: (id: string, field: keyof Education, value: string) => void;
   addLanguage: (language: Language) => void;
   removeLanguage: (id: string) => void;
-  updateLanguage: (id: string, field: string, value: string) => void;
+  updateLanguage: (id: string, field: keyof Language, value: string) => void;
 }
-
-export const useCVStore = create<CVState>((set) => ({
-  data: {
-    personalInfo: {
-      photo: "",
-      fullName: "Jan Kowalski",
-      title: "Specjalista",
-      email: "jan@example.com",
-      phone: "+48 123 456 789",
-      address: "Warszawa, Polska",
-      linkedin: "linkedin.com/in/jankowalski",
-      summary:
-        "Motywowany profesjonalista z doświadczeniem w branży. Dążę do ciągłego rozwoju i osiągania wyznaczonych celów.",
-    },
-    experiences: [
-      {
-        id: "1",
-        company: "Nazwa Firmy",
-        position: "Stanowisko",
-        startDate: "2020-01-01",
-        endDate: "2023-01-01",
-      },
-    ],
-    skills: [],
-    education: [],
-    languages: [],
-  },
-  templateId: "classic",
-
-  updatePersonal: (field, value) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        personalInfo: {
-          ...state.data.personalInfo,
-          [field]: value,
+export const useCVStore = create<CVState>()(
+  devtools(
+    persist(
+      (set) => ({
+        data: {
+          personalInfo: {
+            photo: "",
+            fullName: "",
+            title: "",
+            email: "",
+            phone: "",
+            address: "",
+            linkedin: "",
+            summary: "",
+          },
+          experiences: [],
+          skills: [],
+          education: [],
+          languages: [],
         },
-      },
-    })),
+        templateId: "classic",
 
-  setTemplate: (id) => set({ templateId: id }),
+        updatePersonal: (field, value) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              personalInfo: {
+                ...state.data.personalInfo,
+                [field]: value,
+              },
+            },
+          })),
 
-  addExperience: (experience) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        experiences: [...state.data.experiences, experience],
-      },
-    })),
+        setTemplate: (id) => set({ templateId: id }),
 
-  removeExperience: (id) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        experiences: state.data.experiences.filter((exp) => exp.id !== id),
-      },
-    })),
+        addExperience: (experience) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              experiences: [...state.data.experiences, experience],
+            },
+          })),
 
-  updateExperience: (id, field, value) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        experiences: state.data.experiences.map((exp) =>
-          exp.id === id ? { ...exp, [field]: value } : exp,
-        ),
-      },
-    })),
+        removeExperience: (id) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              experiences: state.data.experiences.filter(
+                (exp) => exp.id !== id,
+              ),
+            },
+          })),
 
-  addSkill: (skill) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        skills: [...state.data.skills, skill],
-      },
-    })),
+        updateExperience: (id, field, value) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              experiences: state.data.experiences.map((exp) =>
+                exp.id === id ? { ...exp, [field]: value } : exp,
+              ),
+            },
+          })),
 
-  removeSkill: (id) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        skills: state.data.skills.filter((skill) => skill.id !== id),
-      },
-    })),
+        addSkill: (skill) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              skills: [...state.data.skills, skill],
+            },
+          })),
 
-  updateSkill: (id, field, value) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        skills: state.data.skills.map((skill) =>
-          skill.id === id ? { ...skill, [field]: value } : skill,
-        ),
-      },
-    })),
+        removeSkill: (id) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              skills: state.data.skills.filter((skill) => skill.id !== id),
+            },
+          })),
 
-  addEducation: (education) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        education: [...state.data.education, education],
-      },
-    })),
+        updateSkill: (id, field, value) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              skills: state.data.skills.map((skill) =>
+                skill.id === id ? { ...skill, [field]: value } : skill,
+              ),
+            },
+          })),
 
-  removeEducation: (id) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        education: state.data.education.filter((edu) => edu.id !== id),
-      },
-    })),
+        addEducation: (education) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              education: [...state.data.education, education],
+            },
+          })),
 
-  updateEducation: (id, field, value) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        education: state.data.education.map((edu) =>
-          edu.id === id ? { ...edu, [field]: value } : edu,
-        ),
-      },
-    })),
+        removeEducation: (id) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              education: state.data.education.filter((edu) => edu.id !== id),
+            },
+          })),
 
-  addLanguage: (language) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        languages: [...state.data.languages, language],
-      },
-    })),
+        updateEducation: (id, field, value) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              education: state.data.education.map((edu) =>
+                edu.id === id ? { ...edu, [field]: value } : edu,
+              ),
+            },
+          })),
 
-  removeLanguage: (id) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        languages: state.data.languages.filter((lang) => lang.id !== id),
-      },
-    })),
+        addLanguage: (language) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              languages: [...state.data.languages, language],
+            },
+          })),
 
-  updateLanguage: (id, field, value) =>
-    set((state) => ({
-      data: {
-        ...state.data,
-        languages: state.data.languages.map((lang) =>
-          lang.id === id ? { ...lang, [field]: value } : lang,
-        ),
-      },
-    })),
-}));
+        removeLanguage: (id) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              languages: state.data.languages.filter((lang) => lang.id !== id),
+            },
+          })),
+
+        updateLanguage: (id, field, value) =>
+          set((state) => ({
+            data: {
+              ...state.data,
+              languages: state.data.languages.map((lang) =>
+                lang.id === id ? { ...lang, [field]: value } : lang,
+              ),
+            },
+          })),
+      }),
+      { name: "cv" },
+    ),
+  ),
+);

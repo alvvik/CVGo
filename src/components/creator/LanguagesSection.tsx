@@ -22,7 +22,7 @@ export default function LanguagesSection({
         <ButtonCustom
           onClick={() => {
             addLanguage({
-              id: Date.now().toString(),
+              id: crypto.randomUUID().toString(),
               language: "",
               level: "B1",
             });

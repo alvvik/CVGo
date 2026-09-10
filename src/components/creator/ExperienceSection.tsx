@@ -22,7 +22,7 @@ export default function ExperienceSection({
         <ButtonCustom
           onClick={() => {
             addExperience({
-              id: Date.now().toString(),
+              id: crypto.randomUUID().toString(),
               company: "",
               position: "",
               startDate: "",

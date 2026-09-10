@@ -22,7 +22,7 @@ export default function SkillsSection({
         <ButtonCustom
           onClick={() => {
             addSkill({
-              id: Date.now().toString(),
+              id: crypto.randomUUID().toString(),
               name: "",
               level: "Średniozaawansowany",
             });
@@ -64,7 +64,7 @@ export default function SkillsSection({
                     Średniozaawansowany
                   </option>
                   <option value="Zaawansowany">Zaawansowany</option>
-                  <option value="Espercki">Espercki</option>
+                  <option value="Ekspert">Ekspert</option>
                 </select>
               </div>
               <ButtonCustom
