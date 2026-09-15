@@ -18,6 +18,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import Image from "next/image";
 
 export default function EditorPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,6 +41,8 @@ export default function EditorPage() {
     removeLanguage,
     updateLanguage,
   } = useCVStore();
+
+  const selectedTemplate = templates.find((t) => t.id === templateId);
 
   const handlePhotoUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -95,19 +98,17 @@ export default function EditorPage() {
               <div className="relative">
                 <ListboxButton className="relative w-full cursor-pointer rounded-xl border border-primary/15 bg-background px-4 py-3 text-left text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20 hover:border-primary/30 flex items-center justify-between">
                   <span className="flex items-center gap-3">
-                    {templates.find((t) => t.id === templateId)
-                      ?.previewImage && (
-                      <img
-                        src={
-                          templates.find((t) => t.id === templateId)
-                            ?.previewImage
-                        }
+                    {selectedTemplate?.previewImage && (
+                      <Image
+                        src={selectedTemplate.previewImage}
                         alt="Podgląd szablonu"
+                        width={40}
+                        height={40}
                         className="h-10 w-10 rounded-lg object-cover"
                       />
                     )}
                     <span className="font-semibold">
-                      {templates.find((t) => t.id === templateId)?.name}
+                      {selectedTemplate?.name}
                     </span>
                   </span>
                   <svg
@@ -133,10 +134,14 @@ export default function EditorPage() {
                     >
                       <span className="flex items-center gap-3">
                         {template.previewImage && (
-                          <img
+                          <Image
                             src={template.previewImage}
                             alt={template.name}
+                            width={40}
+                            height={40}
                             className="h-10 w-10 rounded-lg object-cover"
+                            loading="lazy"
+                            decoding="async"
                           />
                         )}
                         <div className="flex flex-col">
@@ -157,20 +162,20 @@ export default function EditorPage() {
               Podgląd
             </PopoverButton>
             <PopoverPanel className="absolute right-0 z-20 mt-2 w-80 rounded-xl border border-primary/15 bg-background/90 p-4 shadow-lg focus:outline-none">
-              {templates.find((t) => t.id === templateId)?.previewImage && (
+              {selectedTemplate?.previewImage && (
                 <div className="space-y-3">
                   <h3 className="font-semibold text-text">
-                    {templates.find((t) => t.id === templateId)?.name}
+                    {selectedTemplate.name}
                   </h3>
-                  <img
-                    src={
-                      templates.find((t) => t.id === templateId)?.previewImage
-                    }
+                  <Image
+                    src={selectedTemplate.previewImage}
                     alt="Podgląd szablonu"
+                    width={320}
+                    height={180}
                     className="w-full rounded-lg object-cover"
                   />
                   <p className="text-xs text-text/60">
-                    {templates.find((t) => t.id === templateId)?.description}
+                    {selectedTemplate.description}
                   </p>
                 </div>
               )}
@@ -260,8 +265,8 @@ export default function EditorPage() {
               </div>
             ) : (
               <p className="text-sm text-text/60">
-                Brak Twojego zdjęcia. Możesz je dodać, aby Twoje CV
-                wyglądało bardziej profesjonalnie. Zwiększa to również szanse na
+                Brak Twojego zdjęcia. Możesz je dodać, aby Twoje CV wyglądało
+                bardziej profesjonalnie. Zwiększa to również szanse na
                 przyciągnięcie uwagi rekrutera. Pamiętaj, aby zdjęcie było
                 aktualne i przedstawiało Cię w pozytywnym świetle.
               </p>

@@ -16,6 +16,8 @@ export default function ClassicCV({ data }: Props) {
               src={p.photo}
               alt={p.fullName}
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover shrink-0"
+              loading="lazy"
+              decoding="async"
             />
           )}
 

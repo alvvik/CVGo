@@ -16,6 +16,8 @@ export default function ModernCV({ data }: Props) {
               src={p.photo}
               alt={p.fullName}
               className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover mx-auto border-4 border-indigo-700"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         )}

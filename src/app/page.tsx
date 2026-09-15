@@ -1,9 +1,11 @@
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero/Hero";
-import FloatingCreatorButton from "@/components/FloatingCreatorButton";
-import HowItWorks from "@/components/HowItWorks/HowItWorks";
-
-import FAQ from "@/components/FAQ/FAQ";
-import Comparison from "@/components/Comparison/Comparison";
+const FloatingCreatorButton = dynamic(
+  () => import("@/components/FloatingCreatorButton"),
+);
+const HowItWorks = dynamic(() => import("@/components/HowItWorks/HowItWorks"));
+const FAQ = dynamic(() => import("@/components/FAQ/FAQ"));
+const Comparison = dynamic(() => import("@/components/Comparison/Comparison"));
 
 export default function Home() {
   return (
