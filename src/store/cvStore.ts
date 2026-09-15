@@ -68,24 +68,15 @@ export const useCVStore = create<CVState>((set) => ({
   data: {
     personalInfo: {
       photo: "",
-      fullName: "Jan Kowalski",
-      title: "Specjalista",
-      email: "jan@example.com",
-      phone: "+48 123 456 789",
-      address: "Warszawa, Polska",
-      linkedin: "linkedin.com/in/jankowalski",
-      summary:
-        "Motywowany profesjonalista z doświadczeniem w branży. Dążę do ciągłego rozwoju i osiągania wyznaczonych celów.",
+      fullName: "",
+      title: "",
+      email: "",
+      phone: "",
+      address: "",
+      linkedin: "",
+      summary: "",
     },
-    experiences: [
-      {
-        id: "1",
-        company: "Nazwa Firmy",
-        position: "Stanowisko",
-        startDate: "2020-01-01",
-        endDate: "2023-01-01",
-      },
-    ],
+    experiences: [],
     skills: [],
     education: [],
     languages: [],

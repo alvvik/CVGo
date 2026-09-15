@@ -69,16 +69,16 @@ export default function EditorPage() {
           onClick={() => exportData(data)}
           className="flex-1 text-sm"
         >
-          Eksportuj JSON
+          Eksportuj CV
         </ButtonCustom>
         <ButtonCustom
           onClick={() => exportToPDF(cvRef)}
           className="flex-1 text-sm"
         >
-          Eksportuj PDF
+          Pobierz gotowe CV
         </ButtonCustom>
         <label className="flex flex-1 cursor-pointer items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-primary focus:outline-none focus:ring-4 focus:ring-primary/20">
-          Importuj JSON
+          Importuj CV
           <input
             type="file"
             accept="application/json"
@@ -234,7 +234,7 @@ export default function EditorPage() {
 
           <div className="space-y-3">
             <label className="block text-sm font-medium text-text">
-              Zdjęcie profilowe
+              Twoje zdjęcie
             </label>
             <input
               type="file"
@@ -247,7 +247,7 @@ export default function EditorPage() {
               <div className="flex items-center gap-3 rounded-xl border border-primary/15 bg-background p-3">
                 <img
                   src={data.personalInfo.photo}
-                  alt="Podgląd zdjęcia profilowego"
+                  alt="Podgląd Twojego zdjęcia"
                   className="h-16 w-16 rounded-full object-cover border border-primary/15"
                 />
                 <button
@@ -260,7 +260,7 @@ export default function EditorPage() {
               </div>
             ) : (
               <p className="text-sm text-text/60">
-                Brak Twojego zdjęcia profilowego. Możesz je dodać, aby Twoje CV
+                Brak Twojego zdjęcia. Możesz je dodać, aby Twoje CV
                 wyglądało bardziej profesjonalnie. Zwiększa to również szanse na
                 przyciągnięcie uwagi rekrutera. Pamiętaj, aby zdjęcie było
                 aktualne i przedstawiało Cię w pozytywnym świetle.
