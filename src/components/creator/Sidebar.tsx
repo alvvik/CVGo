@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useCVStore } from "@/store/cvStore";
 import Header from "./Header";
 import ExportImportActions from "./ExportImportActions";

@@ -6,7 +6,7 @@ interface EducationSectionProps {
   education: Education[];
   addEducation: (edu: Education) => void;
   removeEducation: (id: string) => void;
-  updateEducation: (id: string, field: string, value: string) => void;
+  updateEducation: (id: string, field: keyof Education, value: string) => void;
 }
 
 export default function EducationSection({

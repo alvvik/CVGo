@@ -1,17 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ButtonCustom from "@/components/ButtonCustom";
 import { useCVStore } from "@/store/cvStore";
 import Image from "next/image";
 import templates from "@/components/CVTemplates/templates";
 export default function StartPopout() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [view, setView] = useState<"start" | "templates">("start");
-  const { templateId, setTemplate } = useCVStore();
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
+  const { setTemplate } = useCVStore();
 
   const handleTemplateClick = () => {
     setView("templates");

@@ -1,8 +1,9 @@
 import InputCustom from "@/components/InputCustom";
+import { PersonalInfo } from "@/store/cvStore";
 
 interface SummarySectionProps {
   summary: string;
-  updatePersonal: (field: string, value: string) => void;
+  updatePersonal: (field: keyof PersonalInfo, value: string) => void;
 }
 
 export default function SummarySection({

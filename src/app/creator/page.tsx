@@ -59,7 +59,9 @@ export default function EditorPage() {
           </div>
         </div>
       </div>
-      <StartPopout />
+      <div className="hidden md:block">
+        <StartPopout />
+      </div>
     </>
   );
 }

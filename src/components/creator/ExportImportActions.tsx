@@ -1,7 +1,6 @@
 import ButtonCustom from "@/components/ButtonCustom";
 import { exportData, exportToPDF } from "@/utils/export";
 import { handleImportJson } from "@/utils/import";
-import { useRef } from "react";
 import { CVState } from "@/store/cvStore";
 
 interface ExportImportActionsProps {

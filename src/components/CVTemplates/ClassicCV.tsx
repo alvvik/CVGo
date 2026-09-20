@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 type Props = { data: any };
@@ -12,7 +13,7 @@ export default function ClassicCV({ data }: Props) {
       <header className="border-b-2 border-slate-800 pb-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {p.photo && (
-            <img
+            <Image
               src={p.photo}
               alt={p.fullName}
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover shrink-0"
@@ -58,7 +59,6 @@ export default function ClassicCV({ data }: Props) {
         </div>
       </header>
 
-      {/* Podsumowanie zawodowe */}
       {p.summary && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
@@ -70,7 +70,6 @@ export default function ClassicCV({ data }: Props) {
         </section>
       )}
 
-      {/* Doświadczenie zawodowe */}
       {data.experiences && data.experiences.length > 0 && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">

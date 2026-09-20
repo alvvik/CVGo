@@ -1,10 +1,11 @@
 import InputCustom from "@/components/InputCustom";
 import { type ChangeEvent } from "react";
-import { CVState } from "@/store/cvStore";
+import { CVState, PersonalInfo } from "@/store/cvStore";
+import Image from "next/image";
 
 interface PersonalInfoFormProps {
   personalInfo: CVState["data"]["personalInfo"];
-  updatePersonal: (field: string, value: string) => void;
+  updatePersonal: (field: keyof PersonalInfo, value: string) => void;
 }
 
 export default function PersonalInfoForm({
@@ -93,7 +94,7 @@ export default function PersonalInfoForm({
 
           {personalInfo.photo ? (
             <div className="flex items-center gap-3 rounded-xl border border-primary/15 bg-background p-3">
-              <img
+              <Image
                 src={personalInfo.photo}
                 alt="Podgląd zdjęcia profilowego"
                 className="h-16 w-16 rounded-full object-cover border border-primary/15"

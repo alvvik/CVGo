@@ -53,7 +53,7 @@ export interface CVState {
 
   setTemplate: (id: "classic" | "modern") => void;
   addExperience: (experience: Experience) => void;
-  removeExperience: (id: keyof Experience) => void;
+  removeExperience: (id: string) => void;
   updateExperience: (
     id: string,
     field: keyof Experience,

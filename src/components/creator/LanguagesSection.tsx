@@ -6,7 +6,7 @@ interface LanguagesSectionProps {
   languages: Language[];
   addLanguage: (lang: Language) => void;
   removeLanguage: (id: string) => void;
-  updateLanguage: (id: string, field: string, value: string) => void;
+  updateLanguage: (id: string, field: keyof Language, value: string) => void;
 }
 
 export default function LanguagesSection({

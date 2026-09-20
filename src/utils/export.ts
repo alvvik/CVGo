@@ -19,7 +19,5 @@ export const exportToPDF = (
 ) => {
   if (!targetRef.current) return;
 
-  const element = targetRef.current;
-
   window.print();
 };

@@ -8,6 +8,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import Image from "next/image";
 
 interface TemplateSelectorProps {
   templateId: "classic" | "modern";
@@ -18,6 +19,8 @@ export default function TemplateSelector({
   templateId,
   setTemplate,
 }: TemplateSelectorProps) {
+  const selectedTemplate = templates.find((t) => t.id === templateId);
+
   return (
     <div className="mb-6 space-y-4 rounded-2xl border border-primary/15 bg-background/90 p-4">
       <h2>Szablon CV</h2>
@@ -27,17 +30,16 @@ export default function TemplateSelector({
             <div className="relative">
               <ListboxButton className="relative w-full cursor-pointer rounded-xl border border-primary/15 bg-background px-4 py-3 text-left text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20 hover:border-primary/30 flex items-center justify-between">
                 <span className="flex items-center gap-3">
-                  {templates.find((t) => t.id === templateId)?.previewImage && (
-                    <img
-                      src={
-                        templates.find((t) => t.id === templateId)?.previewImage
-                      }
+                  {selectedTemplate?.previewImage && (
+                    <Image
+                      fill
+                      src={selectedTemplate.previewImage}
                       alt="Podgląd szablonu"
                       className="h-10 w-10 rounded-lg object-cover"
                     />
                   )}
                   <span className="font-semibold">
-                    {templates.find((t) => t.id === templateId)?.name}
+                    {selectedTemplate?.name}
                   </span>
                 </span>
                 <svg
@@ -63,7 +65,7 @@ export default function TemplateSelector({
                   >
                     <span className="flex items-center gap-3">
                       {template.previewImage && (
-                        <img
+                        <Image
                           src={template.previewImage}
                           alt={template.name}
                           className="h-10 w-10 rounded-lg object-cover"
@@ -87,18 +89,19 @@ export default function TemplateSelector({
             Podgląd
           </PopoverButton>
           <PopoverPanel className="absolute right-0 z-20 mt-2 w-80 rounded-xl border border-primary/15 bg-background/90 p-4 shadow-lg focus:outline-none">
-            {templates.find((t) => t.id === templateId)?.previewImage && (
+            {selectedTemplate?.previewImage && (
               <div className="space-y-3">
                 <h3 className="font-semibold text-text">
-                  {templates.find((t) => t.id === templateId)?.name}
+                  {selectedTemplate.name}
                 </h3>
-                <img
-                  src={templates.find((t) => t.id === templateId)?.previewImage}
+                <Image
+                  src={selectedTemplate.previewImage}
                   alt="Podgląd szablonu"
+                  fill
                   className="w-full rounded-lg object-cover"
                 />
                 <p className="text-xs text-text/60">
-                  {templates.find((t) => t.id === templateId)?.description}
+                  {selectedTemplate.description}
                 </p>
               </div>
             )}

@@ -6,7 +6,11 @@ interface ExperienceSectionProps {
   experiences: Experience[];
   addExperience: (exp: Experience) => void;
   removeExperience: (id: string) => void;
-  updateExperience: (id: string, field: string, value: string) => void;
+  updateExperience: (
+    id: string,
+    field: keyof Experience,
+    value: string,
+  ) => void;
 }
 
 export default function ExperienceSection({

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 type Props = { data: any };
@@ -12,7 +13,7 @@ export default function ModernCV({ data }: Props) {
         {/* Photo */}
         {p.photo && (
           <div className="mb-6">
-            <img
+            <Image
               src={p.photo}
               alt={p.fullName}
               className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover mx-auto border-4 border-indigo-700"
