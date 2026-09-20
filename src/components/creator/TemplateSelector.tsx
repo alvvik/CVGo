@@ -32,7 +32,8 @@ export default function TemplateSelector({
                 <span className="flex items-center gap-3">
                   {selectedTemplate?.previewImage && (
                     <Image
-                      fill
+                      width={32}
+                      height={32}
                       src={selectedTemplate.previewImage}
                       alt="Podgląd szablonu"
                       className="h-10 w-10 rounded-lg object-cover"
@@ -66,6 +67,8 @@ export default function TemplateSelector({
                     <span className="flex items-center gap-3">
                       {template.previewImage && (
                         <Image
+                          height={64}
+                          width={64}
                           src={template.previewImage}
                           alt={template.name}
                           className="h-10 w-10 rounded-lg object-cover"
@@ -97,7 +100,8 @@ export default function TemplateSelector({
                 <Image
                   src={selectedTemplate.previewImage}
                   alt="Podgląd szablonu"
-                  fill
+                  height={256}
+                  width={256}
                   className="w-full rounded-lg object-cover"
                 />
                 <p className="text-xs text-text/60">
