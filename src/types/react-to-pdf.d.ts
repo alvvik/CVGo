@@ -1,4 +1,4 @@
 declare module "react-to-pdf" {
-  const ReactToPdf: any;
+  const ReactToPdf: unknown;
   export default ReactToPdf;
 }

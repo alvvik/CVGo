@@ -1,18 +1,25 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
+import {
+  CVState,
+  Experience,
+  Education,
+  Skill,
+  Language,
+} from "@/store/cvStore";
 
-type Props = { data: any };
+type Props = { data: CVState["data"] };
 
 export default function ModernCV({ data }: Props) {
   const p = data.personalInfo;
   return (
     <div className="w-full h-full print:min-h-screen flex flex-col sm:flex-row text-sm sm:text-base bg-white text-slate-800">
       <aside className="w-full sm:w-1/3 bg-indigo-900 text-white p-4 sm:p-6 order-2 sm:order-1">
-        {/* Photo */}
         {p.photo && (
           <div className="mb-6">
-            <img
+            <Image
               src={p.photo}
               alt={p.fullName}
               className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover mx-auto border-4 border-indigo-700"
@@ -22,7 +29,6 @@ export default function ModernCV({ data }: Props) {
           </div>
         )}
 
-        {/* Contact Info */}
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-indigo-200 mb-3">
             Kontakt
@@ -55,14 +61,13 @@ export default function ModernCV({ data }: Props) {
           </div>
         </section>
 
-        {/* Languages */}
         {data.languages && data.languages.length > 0 && (
           <section className="mb-6">
             <h2 className="text-base sm:text-lg font-bold text-indigo-200 mb-3">
               Języki
             </h2>
             <ul className="space-y-2 text-xs sm:text-sm">
-              {data.languages.map((lang: any) => (
+              {data.languages.map((lang: Language) => (
                 <li key={lang.id} className="flex justify-between">
                   <span>{lang.language}</span>
                   <span className="text-indigo-300">{lang.level}</span>
@@ -73,9 +78,7 @@ export default function ModernCV({ data }: Props) {
         )}
       </aside>
 
-      {/* Right Column - Main Content */}
       <main className="flex-1 p-4 sm:p-6 order-1 sm:order-2">
-        {/* Header */}
         <header className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-indigo-900">
             {p.fullName}
@@ -85,7 +88,6 @@ export default function ModernCV({ data }: Props) {
           </p>
         </header>
 
-        {/* Summary */}
         {p.summary && (
           <section className="mb-6">
             <h2 className="text-base sm:text-lg font-bold text-indigo-900 border-b-2 border-indigo-200 pb-1 mb-3">
@@ -96,13 +98,12 @@ export default function ModernCV({ data }: Props) {
             </p>
           </section>
         )}
-        {/* Skills */}
         {data.skills && data.skills.length > 0 && (
           <section className="mb-6">
             <h2 className="text-base sm:text-lg font-bold text-indigo-200 mb-3">
               Umiejętności
             </h2>
-            {data.skills.map((skill: any) => (
+            {data.skills.map((skill: Skill) => (
               <article
                 key={skill.id}
                 className="text-xs sm:text-sm border-l-4 border-indigo-300 pl-4"
@@ -115,14 +116,13 @@ export default function ModernCV({ data }: Props) {
             ))}
           </section>
         )}
-        {/* Experience */}
         {data.experiences && data.experiences.length > 0 && (
           <section className="mb-6">
             <h2 className="text-base sm:text-lg font-bold text-indigo-900 border-b-2 border-indigo-200 pb-1 mb-3">
               Doświadczenie zawodowe
             </h2>
             <div className="space-y-4">
-              {data.experiences.map((exp: any) => (
+              {data.experiences.map((exp: Experience) => (
                 <article
                   key={exp.id}
                   className="text-xs sm:text-sm border-l-4 border-indigo-500 pl-4"
@@ -145,14 +145,13 @@ export default function ModernCV({ data }: Props) {
           </section>
         )}
 
-        {/* Education */}
         {data.education && data.education.length > 0 && (
           <section className="mb-6">
             <h2 className="text-base sm:text-lg font-bold text-indigo-900 border-b-2 border-indigo-200 pb-1 mb-3">
               Wykształcenie
             </h2>
             <div className="space-y-3">
-              {data.education.map((edu: any) => (
+              {data.education.map((edu: Education) => (
                 <article
                   key={edu.id}
                   className="text-xs sm:text-sm border-l-4 border-indigo-300 pl-4"

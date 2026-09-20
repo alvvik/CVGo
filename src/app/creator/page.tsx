@@ -579,7 +579,7 @@ export default function EditorPage() {
     <>
       <div className="flex h-screen overflow-hidden bg-background text-text print:block print:h-auto print:overflow-visible print:bg-white">
         <div className="hidden w-full max-w-xl border-r border-primary/15 bg-background lg:block print:hidden">
-          {SidebarContent}
+          <Sidebar cvRef={cvRef} />
         </div>
 
         <div className="flex flex-1 items-center justify-center bg-background p-2 md:p-8 print:flex print:w-full print:max-w-none print:p-0 print:bg-white">
@@ -618,12 +618,14 @@ export default function EditorPage() {
               </button>
             </div>
             <div className="h-[calc(85vh-73px)] overflow-y-auto overscroll-contain p-4">
-              {SidebarContent}
+              <Sidebar cvRef={cvRef} />
             </div>
           </div>
         </div>
       </div>
-      <StartPopout />
+      <div className="hidden md:block">
+        <StartPopout />
+      </div>
     </>
   );
 }

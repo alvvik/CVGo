@@ -1,8 +1,8 @@
 ## O projekcie
 
-CVGo — Generator CV zbudowany przy użyciu Next.js i Tailwind CSS. Repozytorium zawiera front-end: komponenty, układ i przykładowe szablony.
+CVGo - Generator CV zbudowany przy użyciu Next.js i Tailwind CSS. Repozytorium zawiera front-end: komponenty, układ i przykładowe szablony.
 
-## Live Demo: ...
+## Live Demo: [cvgo.alvv.ovh](https://cvgo.alvv.ovh)
 
 ## Stack technologiczny
 

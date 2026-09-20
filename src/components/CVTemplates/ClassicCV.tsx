@@ -1,18 +1,25 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
+import {
+  CVState,
+  Experience,
+  Education,
+  Skill,
+  Language,
+} from "@/store/cvStore";
 
-type Props = { data: any };
+type Props = { data: CVState["data"] };
 
 export default function ClassicCV({ data }: Props) {
   const p = data.personalInfo;
   return (
     <div className="w-full h-full flex flex-col text-sm sm:text-base bg-white text-slate-800">
-      {/* Header - Dane osobowe */}
       <header className="border-b-2 border-slate-800 pb-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {p.photo && (
-            <img
+            <Image
               src={p.photo}
               alt={p.fullName}
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover shrink-0"
@@ -29,7 +36,6 @@ export default function ClassicCV({ data }: Props) {
               {p.title}
             </p>
 
-            {/* Dane kontaktowe */}
             <div className="mt-3 text-xs sm:text-sm text-slate-600 space-y-1">
               {p.email && (
                 <div className="flex items-center gap-2">
@@ -60,7 +66,6 @@ export default function ClassicCV({ data }: Props) {
         </div>
       </header>
 
-      {/* Podsumowanie zawodowe */}
       {p.summary && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
@@ -72,14 +77,13 @@ export default function ClassicCV({ data }: Props) {
         </section>
       )}
 
-      {/* Doświadczenie zawodowe */}
       {data.experiences && data.experiences.length > 0 && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
             Doświadczenie zawodowe
           </h2>
           <div className="space-y-4">
-            {data.experiences.map((exp: any) => (
+            {data.experiences.map((exp: Experience) => (
               <article key={exp.id} className="text-xs sm:text-sm">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
                   <h3 className="font-bold text-slate-900">{exp.position}</h3>
@@ -99,14 +103,13 @@ export default function ClassicCV({ data }: Props) {
         </section>
       )}
 
-      {/* Wykształcenie */}
       {data.education && data.education.length > 0 && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
             Wykształcenie
           </h2>
           <div className="space-y-3">
-            {data.education.map((edu: any) => (
+            {data.education.map((edu: Education) => (
               <article key={edu.id} className="text-xs sm:text-sm">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
                   <h3 className="font-bold text-slate-900">{edu.degree}</h3>
@@ -124,14 +127,13 @@ export default function ClassicCV({ data }: Props) {
         </section>
       )}
 
-      {/* Umiejętności */}
       {data.skills && data.skills.length > 0 && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
             Umiejętności
           </h2>
           <ul className="text-xs sm:text-sm text-slate-700 space-y-1">
-            {data.skills.map((skill: any) => (
+            {data.skills.map((skill: Skill) => (
               <li key={skill.id} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-slate-800 rounded-full shrink-0"></span>
                 <span>
@@ -143,14 +145,13 @@ export default function ClassicCV({ data }: Props) {
         </section>
       )}
 
-      {/* Języki obce */}
       {data.languages && data.languages.length > 0 && (
         <section className="mb-6">
           <h2 className="text-base sm:text-lg font-bold text-slate-900 border-b border-slate-300 pb-1 mb-3 font-serif">
             Języki obce
           </h2>
           <ul className="text-xs sm:text-sm text-slate-700 space-y-1">
-            {data.languages.map((lang: any) => (
+            {data.languages.map((lang: Language) => (
               <li key={lang.id} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-slate-800 rounded-full shrink-0"></span>
                 <span>
