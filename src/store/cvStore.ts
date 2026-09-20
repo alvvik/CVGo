@@ -69,25 +69,33 @@ export interface CVState {
   removeLanguage: (id: string) => void;
   updateLanguage: (id: string, field: keyof Language, value: string) => void;
 }
-export const useCVStore = create<CVState>()(
-  devtools(
-    persist(
-      (set) => ({
-        data: {
-          personalInfo: {
-            photo: "",
-            fullName: "",
-            title: "",
-            email: "",
-            phone: "",
-            address: "",
-            linkedin: "",
-            summary: "",
-          },
-          experiences: [],
-          skills: [],
-          education: [],
-          languages: [],
+
+export const useCVStore = create<CVState>((set) => ({
+  data: {
+    personalInfo: {
+      photo: "",
+      fullName: "",
+      title: "",
+      email: "",
+      phone: "",
+      address: "",
+      linkedin: "",
+      summary: "",
+    },
+    experiences: [],
+    skills: [],
+    education: [],
+    languages: [],
+  },
+  templateId: "classic",
+
+  updatePersonal: (field, value) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        personalInfo: {
+          ...state.data.personalInfo,
+          [field]: value,
         },
         templateId: "classic",
 
