@@ -1,12 +1,13 @@
 import ClassicCV from "./ClassicCV";
 import ModernCV from "./ModernCV";
+import { CVState } from "@/store/cvStore";
 
 type TemplateEntry = {
   id: string;
   name: string;
   description?: string;
   previewImage?: string;
-  component: React.ComponentType<any>;
+  component: React.ComponentType<{ data: CVState["data"] }>;
 };
 
 export const templates: TemplateEntry[] = [
@@ -26,7 +27,10 @@ export const templates: TemplateEntry[] = [
   },
 ];
 
-export const templatesMap: Record<string, React.ComponentType<any>> = {};
+export const templatesMap: Record<
+  string,
+  React.ComponentType<{ data: CVState["data"] }>
+> = {};
 templates.forEach((t) => {
   templatesMap[t.id] = t.component;
 });
